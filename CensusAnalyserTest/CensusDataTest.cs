@@ -2,7 +2,7 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using IndianStateCensusData_CSharp.DTO;
 using IndianStateCensusData_CSharp.POCO;
-
+using IndianStateCensusData_CSharp;
 using static IndianStateCensusData_CSharp.DTO.CensusAnalyser;
 
 namespace CensusAnalyserTest
@@ -12,7 +12,7 @@ namespace CensusAnalyserTest
 
         static string indianStateCensusHeaders = "State,Population,AreaInSqKm,DensityPerSqKm";
         static string indiaStateCensusFilePath = @"C:\Users\NKS\Desktop\CSharp Git problems\IndianStateCensusDemo\CensusAnalyserTest\Files\IndiaStateCensesData.csv";
-
+        static string wrongIndiaStateCensusFilePath = @"C:\Users\NKS\Desktop\CSharp Git problems\IndianStateCensusDemo\CensusAnalyserTest\Files\WrongIndiaStateCensesData.csv";
         CensusAnalyser censusAnalyser;
         Dictionary<string, CensusDTO> totalRecord;
 
@@ -32,6 +32,16 @@ namespace CensusAnalyserTest
         {
             totalRecord = censusAnalyser.LoadCensusData(Country.INDIA, indiaStateCensusFilePath, indianStateCensusHeaders);
             Assert.AreEqual(29, totalRecord.Count);
+        }
+
+        /// <summary>
+        /// Test Case 1.2 Given the indian census data file when incorrect then return File not found exception.
+        /// </summary>
+        [Test]
+        public void GivenIndianCensusDataFile_WhenIncorrect_ThenShouldReturnFileNotFoundException()
+        {
+            var censusException = Assert.Throws<CensusAnalyserException>(() => censusAnalyser.LoadCensusData(Country.INDIA, wrongIndiaStateCensusFilePath, indianStateCensusHeaders));
+            Assert.AreEqual(CensusAnalyserException.ExceptionType.FILE_NOT_FOUND, censusException.eType);
         }
     }
 }
