@@ -11,8 +11,9 @@ namespace CensusAnalyserTest
     {
 
         static string indianStateCensusHeaders = "State,Population,AreaInSqKm,DensityPerSqKm";
-        static string indiaStateCensusFilePath = @"C:\Users\NKS\Desktop\CSharp Git problems\IndianStateCensusDemo\CensusAnalyserTest\Files\IndiaStateCensesData.csv";
+        static string indiaStateCensusFilePath = @"C:\Users\NKS\Desktop\CSharp Git problems\IndianStateCensusData_CSharp\CensusAnalyserTest\Files\IndiaStateCensesData.csv";
         static string wrongIndiaStateCensusFilePath = @"C:\Users\NKS\Desktop\CSharp Git problems\IndianStateCensusDemo\CensusAnalyserTest\Files\WrongIndiaStateCensesData.csv";
+        static string wrongIndianStateCensusFileType = @"C:\Users\NKS\Desktop\CSharp Git problems\IndianStateCensusData_CSharp\CensusAnalyserTest\Files\WrongIndiaStateCensesData.txt";
         CensusAnalyser censusAnalyser;
         Dictionary<string, CensusDTO> totalRecord;
 
@@ -42,6 +43,16 @@ namespace CensusAnalyserTest
         {
             var censusException = Assert.Throws<CensusAnalyserException>(() => censusAnalyser.LoadCensusData(Country.INDIA, wrongIndiaStateCensusFilePath, indianStateCensusHeaders));
             Assert.AreEqual(CensusAnalyserException.ExceptionType.FILE_NOT_FOUND, censusException.eType);
+        }
+
+        /// <summary>
+        /// Test Case 1.3 Given the indian census data csv file when correct but type incoorect then return invalid file type exception.
+        /// </summary>
+        [Test]
+        public void GivenIndianCensusDataFile_WhenCorrect_ThenShouldReturnInvalidFileTypeException()
+        {
+            var censusException = Assert.Throws<CensusAnalyserException>(() => censusAnalyser.LoadCensusData(Country.INDIA, wrongIndianStateCensusFileType, indianStateCensusHeaders));
+            Assert.AreEqual(CensusAnalyserException.ExceptionType.INVALID_FILE_TYPE, censusException.eType);
         }
     }
 }
