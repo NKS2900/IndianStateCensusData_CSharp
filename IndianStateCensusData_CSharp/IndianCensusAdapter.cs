@@ -9,6 +9,13 @@ namespace IndianStateCensusData_CSharp
     {
         string[] censusData;
         Dictionary<string, CensusDTO> dataMap;
+
+        /// <summary>
+        /// Adding CSV file data into the Dictionary.
+        /// </summary>
+        /// <param name="csvFilePath"></param>
+        /// <param name="dataHeaders"></param>
+        /// <returns></returns>
         public Dictionary<string, CensusDTO> LoadCensusData(string csvFilePath, string dataHeaders)
         {
             dataMap = new Dictionary<string, CensusDTO>();
