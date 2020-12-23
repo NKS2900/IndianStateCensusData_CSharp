@@ -22,6 +22,7 @@ namespace CensusAnalyserTest
         static string wrongIndianStateCodeFilePath = @"C:\Users\NKS\Desktop\CSharp Git problems\IndianStateCensusDemo\CensusAnalyserTest\Files\WrongIndiaStateCensesData.csv";
         static string wrongIndianStateCodeFileType = @"C:\Users\NKS\Desktop\CSharp Git problems\IndianStateCensusData_CSharp\CensusAnalyserTest\Files\WrongIndianStateCode.txt";
         static string delimiterIndianStateCode = @"C:\Users\NKS\Desktop\CSharp Git problems\IndianStateCensusData_CSharp\CensusAnalyserTest\Files\DelimiterIndianStateCode.csv";
+        static string wrongHeaderIndianStateCodeData = @"C:\Users\NKS\Desktop\CSharp Git problems\IndianStateCensusData_CSharp\CensusAnalyserTest\Files\WrongHeadearIndianStateCode.csv";
         CensusAnalyser censusAnalyser;
         Dictionary<string, CensusDTO> totalRecord;
         Dictionary<string, CensusDTO> stateRecord;
@@ -123,6 +124,16 @@ namespace CensusAnalyserTest
         {
             var censusException = Assert.Throws<CensusAnalyserException>(() => censusAnalyser.LoadCensusData(Country.INDIA, delimiterIndianStateCode, indianStateCodeHeaders));
             Assert.AreEqual(CensusAnalyserException.ExceptionType.INCORRECT_DELIMITER, censusException.eType);
+        }
+
+        /// <summary>
+        /// Test Case 2.5 Given the indian state code csv file when correct but header incoorect then return incorrect delimiter exception.
+        /// </summary>
+        [Test]
+        public void GivenIndianStateCodeCsvFileCorrect_WhenHeaderIncorrect_ThenShouldReturnInvalidHeaderException()
+        {
+            var censusException = Assert.Throws<CensusAnalyserException>(() => censusAnalyser.LoadCensusData(Country.INDIA, wrongHeaderIndianStateCodeData, indianStateCodeHeaders));
+            Assert.AreEqual(CensusAnalyserException.ExceptionType.INCORRECT_HEADER, censusException.eType);
         }
     }
 }
